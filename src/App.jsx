@@ -22,6 +22,7 @@ export default function App() {
   const [score, setScore] = useState(0);
   const [gameWon, setGameWon] = useState(false);
   const [time, setTime] = useState(0);
+  const [theme, setTheme] = useState("light");
   const [highScore, setHighScore] = useState(
     localStorage.getItem("highScore") || 0
   );
@@ -31,14 +32,14 @@ export default function App() {
       const [first, second] = selectedCards;
       if (cards[first].emoji === cards[second].emoji) {
         setScore(score + 10);
-        new Audio("/match.mp3").play(); // Match Sound
+        new Audio("/match.mp3").play();
         setCards(prev =>
           prev.map((card, idx) =>
             idx === first || idx === second ? { ...card, matched: true } : card
           )
         );
       } else {
-        new Audio("/flip.mp3").play(); // Flip Sound
+        new Audio("/flip.mp3").play();
       }
       setTimeout(() => {
         setCards(prev =>
@@ -71,7 +72,7 @@ export default function App() {
 
   const handleCardClick = (index) => {
     if (!cards[index].flipped && selectedCards.length < 2) {
-      new Audio("/flip.mp3").play(); // Flip Sound
+      new Audio("/flip.mp3").play();
       setCards(prev =>
         prev.map((card, idx) =>
           idx === index ? { ...card, flipped: true } : card
@@ -96,16 +97,25 @@ export default function App() {
     setGameWon(false);
   };
 
+  const toggleTheme = () => {
+    setTheme(prev => (prev === "light" ? "dark" : "light"));
+  };
+
   return (
-    <div className="app">
-      <h1>Memory Card Game</h1>
+    <div className={`app ${theme}`}>
+      <h1>🧠 Memory Card Game</h1>
       <div className="stats">
         <p>⏳ Time: {time}s</p>
         <p>🏆 High Score: {highScore}s</p>
       </div>
       <h2>Score: {score}</h2>
-      <button onClick={revealCards}>Hint 🔍</button>
-      <button onClick={resetGame}>Reset Game</button>
+      <div className="buttons">
+        <button onClick={revealCards}>Hint 🔍</button>
+        <button onClick={resetGame}>Reset Game</button>
+        <button onClick={toggleTheme}>
+          {theme === "light" ? "🌙 Dark Mode" : "☀️ Light Mode"}
+        </button>
+      </div>
       <CardGrid cards={cards} onCardClick={handleCardClick} />
       {gameWon && <p className="winning-message">🎉 Congratulations! You won! 🎉</p>}
     </div>
