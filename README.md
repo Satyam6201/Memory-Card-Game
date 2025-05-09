@@ -1,12 +1,36 @@
-# React + Vite
+# 🧠 Memory Card Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fun and interactive **Memory Card Game** built using **React.js**, where players test their memory skills by matching pairs of cards. This project showcases front-end development skills, including React hooks, component structuring, and modern CSS styling.
 
-Currently, two official plugins are available:
+## 🚀 Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+https://memory-card-game-bice-zeta.vercel.app/
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🎯 Objective
+
+The aim of this project is to create a responsive, engaging memory card matching game where users flip cards to find matching pairs. It is designed to sharpen memory, concentration, and logic skills while demonstrating efficient use of React features.
+
+---
+
+## 🧩 Features
+
+- ✅ Flip cards to reveal hidden icons
+- ✅ Match pairs of identical cards
+- ✅ Responsive and mobile-friendly layout
+- ✅ Smooth animations and transitions
+- ✅ Reset game button
+- ✅ Score or turn counter (optional enhancement)
+- ✅ Game completion popup with results
+
+---
+
+## 🛠️ Technologies Used
+
+- **React.js** – Functional components and React Hooks (`useState`, `useEffect`)
+- **JavaScript (ES6+)** – Game logic and interactivity
+- **HTML5** – Semantic structure
+- **CSS3** – Styling and animations (flip effect)
+
+
