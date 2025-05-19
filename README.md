@@ -32,5 +32,3 @@ The aim of this project is to create a responsive, engaging memory card matching
 - **JavaScript (ES6+)** – Game logic and interactivity
 - **HTML5** – Semantic structure
 - **CSS3** – Styling and animations (flip effect)
-
-
