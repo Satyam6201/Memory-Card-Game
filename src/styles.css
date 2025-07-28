@@ -21,23 +21,16 @@
 body {
   font-family: "Poppins", sans-serif;
   text-align: center;
-  background: linear-gradient(-45deg, #3F3351, #864879, #E9A6A6, #F6E5E5);
-  background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
+  background: var(--bg);
   color: var(--text);
   margin: 0;
   padding: 0;
+  background: linear-gradient(90deg, #1F1D36, #3F3351, #864879, #E9A6A6, #F6E5E5);
+  transition: background 0.3s, color 0.3s;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.3s, color 0.3s;
-}
-
-@keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
 }
 
 .app {
@@ -47,16 +40,14 @@ body {
   box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
   animation: fadeIn 0.5s ease-in-out;
   transition: all 0.3s ease-in-out;
-  max-width: 600px;
-  width: 95%;
 }
 
-h1, h2, h3 {
+h1, h2 {
   margin-bottom: 10px;
   font-weight: bold;
 }
 
-h2, h3 {
+h2 {
   color: var(--primary);
 }
 
@@ -68,9 +59,9 @@ button {
   border: none;
   cursor: pointer;
   font-weight: 600;
+  transition: all 0.3s;
   background-color: var(--primary);
   color: white;
-  transition: all 0.3s;
 }
 
 button:hover {
@@ -78,15 +69,10 @@ button:hover {
   transform: translateY(-2px);
 }
 
-.grid-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .grid {
   display: grid;
-  gap: 10px;
+  grid-template-columns: repeat(4, 100px);
+  grid-gap: 10px;
   justify-content: center;
   margin-top: 10px;
 }
@@ -119,13 +105,6 @@ button:hover {
 .card.matched {
   border-color: green;
   background-color: var(--matched);
-  animation: matchPulse 0.5s ease-in-out;
-}
-
-@keyframes matchPulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
 }
 
 .card .front,
@@ -152,37 +131,10 @@ button:hover {
 
 .stats {
   display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
+  gap: 20px;
   font-weight: bold;
   font-size: 18px;
   justify-content: center;
-  margin-bottom: 10px;
-}
-
-.buttons {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 15px;
-}
-
-.controls {
-  margin: 10px 0;
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-select {
-  padding: 8px 12px;
-  font-size: 14px;
-  border-radius: 6px;
-  border: 1px solid var(--primary);
-  background-color: var(--card-bg);
-  color: var(--text);
 }
 
 .winning-message {
@@ -193,32 +145,23 @@ select {
   animation: fadeIn 0.5s ease-in-out;
 }
 
-.leaderboard {
-  margin-top: 15px;
-  text-align: left;
-}
-
-.leaderboard ul {
-  list-style: none;
-  padding: 0;
-  font-weight: 600;
-}
-
-.leaderboard li {
-  padding: 4px 0;
-}
-
-.matched-counter {
-  margin-top: 10px;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--primary);
+.buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 
 @media (max-width: 768px) {
   .app {
     width: 90%;
     padding: 20px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(4, 70px);
+    grid-gap: 8px;
   }
 
   .card {
@@ -236,11 +179,12 @@ select {
     font-size: 22px;
   }
 
-  h2, h3 {
+  h2 {
     font-size: 18px;
   }
 
   button {
+    padding: 10px 20px;
     font-size: 14px;
   }
 
@@ -253,24 +197,13 @@ select {
   .winning-message {
     font-size: 18px;
   }
-
-  select {
-    font-size: 12px;
-  }
 }
 
 @media (max-width: 480px) {
   .app {
-    width: 85%;
+    width: 68%;
     padding: 20px;
-  }
-
-  .card {
-    width: 60px;
-    height: 60px;
-  }
-
-  .grid {
-    gap: 8px;
+    margin-left: 50px;
+    margin-top: 10px;
   }
 }
