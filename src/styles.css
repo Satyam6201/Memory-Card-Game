@@ -178,6 +178,16 @@ select {
   color: #fff;
 }
 
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 15px;
+  justify-content: center;
+  margin: 30px auto;
+  max-width: 600px;
+}
+
+
 /* Stats Section */
 .stats {
   display: flex;
