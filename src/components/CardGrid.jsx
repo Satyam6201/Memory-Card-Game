@@ -2,11 +2,15 @@ import React from "react";
 import Card from "./Card";
 import "../styles.css";
 
-export default function CardGrid({ cards, onCardClick }) {
+export default function CardGrid({ cards, handleCardClick }) {
   return (
-    <div className="grid">
+    <div className="card-grid">
       {cards.map((card, index) => (
-        <Card key={card.id} card={card} onClick={() => onCardClick(index)} />
+        <Card
+          key={index}
+          card={card}
+          onClick={() => handleCardClick(index)}
+        />
       ))}
     </div>
   );
