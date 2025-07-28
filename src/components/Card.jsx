@@ -8,6 +8,7 @@ export default function Card({ card, onClick }) {
         card.matched ? "matched" : ""
       }`}
       onClick={onClick}
+      aria-label={card.flipped ? card.emoji : "Hidden card"}
     >
       <div className="front">{card.emoji}</div>
       <div className="back">❓</div>
