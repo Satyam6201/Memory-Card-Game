@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 import CardGrid from "./components/CardGrid";
+import Header from "./components/Header";
+import Controls from "./components/Controls";
+import PlayerForm from "./components/PlayerForm";
+import VictoryModal from "./components/VictoryModal";
 import "./styles.css";
 import confetti from "canvas-confetti";
 
@@ -9,28 +13,37 @@ const emojiThemes = {
   flags: ["🇮🇳", "🇺🇸", "🇬🇧", "🇯🇵", "🇧🇷", "🇫🇷", "🇨🇦", "🇰🇷"],
 };
 
-const generateCards = (theme) => {
-  const emojis = [...emojiThemes[theme], ...emojiThemes[theme]];
+const difficultyMap = {
+  easy: 4,
+  medium: 6,
+  hard: 8,
+};
+
+const generateCards = (theme, difficulty) => {
+  const selectedEmojis = emojiThemes[theme].slice(0, difficulty);
+  const emojis = [...selectedEmojis, ...selectedEmojis];
   return emojis
     .sort(() => Math.random() - 0.5)
     .map((emoji, index) => ({
       id: index,
       emoji,
       flipped: false,
-      matched: false
+      matched: false,
     }));
 };
 
 export default function App() {
   const [theme, setTheme] = useState("light");
   const [emojiSet, setEmojiSet] = useState("animals");
-  const [cards, setCards] = useState(generateCards(emojiSet));
+  const [difficulty, setDifficulty] = useState("easy");
+  const [cards, setCards] = useState(generateCards(emojiSet, difficultyMap[difficulty]));
   const [selectedCards, setSelectedCards] = useState([]);
   const [score, setScore] = useState(0);
   const [moves, setMoves] = useState(0);
   const [time, setTime] = useState(0);
   const [gameWon, setGameWon] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [playerName, setPlayerName] = useState("");
 
   const [highScore, setHighScore] = useState(() =>
     localStorage.getItem("highScore") || 0
@@ -111,7 +124,7 @@ export default function App() {
   };
 
   const resetGame = () => {
-    setCards(generateCards(emojiSet));
+    setCards(generateCards(emojiSet, difficultyMap[difficulty]));
     setSelectedCards([]);
     setScore(0);
     setMoves(0);
@@ -136,47 +149,29 @@ export default function App() {
 
   return (
     <div className={`app ${theme}`}>
-      <h1>🧠 Memory Card Game</h1>
-
-      <div className="stats">
-        <p>⏳ Time: {time}s</p>
-        <p>🎯 Moves: {moves}</p>
-        <p>🏆 Best Time: {highScore}s</p>
-        <p>🔢 Best Moves: {bestMoves}</p>
-      </div>
-
-      <h2>Score: {score}</h2>
-
-      <div className="buttons">
-        <button onClick={revealCards}>Hint 🔍</button>
-        <button onClick={resetGame}>Reset Game</button>
-        <button onClick={toggleTheme}>
-          {theme === "light" ? "🌙 Dark Mode" : "☀️ Light Mode"}
-        </button>
-        <button onClick={() => setIsMuted(!isMuted)}>
-          {isMuted ? "🔇 Mute" : "🔊 Sound"}
-        </button>
-        <select
-          onChange={(e) => {
-            setEmojiSet(e.target.value);
-            resetGame();
-          }}
-          value={emojiSet}
-        >
-          <option value="animals">🐾 Animals</option>
-          <option value="fruits">🍉 Fruits</option>
-          <option value="flags">🚩 Flags</option>
-        </select>
-      </div>
-
-      <CardGrid cards={cards} onCardClick={handleCardClick} />
-
-      {gameWon && (
-        <>
-          <p className="winning-message">🎉 Congratulations! You won! 🎉</p>
-          <button onClick={resetGame}>🔁 Play Again</button>
-        </>
-      )}
+      <PlayerForm playerName={playerName} setPlayerName={setPlayerName} />
+      <Header
+        playerName={playerName}
+        time={time}
+        moves={moves}
+        score={score}
+        bestMoves={bestMoves}
+        highScore={highScore}
+      />
+      <Controls
+        theme={theme}
+        toggleTheme={toggleTheme}
+        emojiSet={emojiSet}
+        setEmojiSet={setEmojiSet}
+        resetGame={resetGame}
+        revealCards={revealCards}
+        isMuted={isMuted}
+        setIsMuted={setIsMuted}
+        difficulty={difficulty}
+        setDifficulty={setDifficulty}
+      />
+      <CardGrid cards={cards} handleCardClick={handleCardClick} />
+      {gameWon && <VictoryModal playerName={playerName} resetGame={resetGame} />}
     </div>
   );
 }
