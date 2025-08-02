@@ -1,0 +1,61 @@
+.player-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem auto;
+  padding: 1.2rem;
+  border: 2px solid #ccc;
+  border-radius: 1rem;
+  background: linear-gradient(145deg, #f9f9f9, #e0e0e0);
+  transition: all 0.3s ease-in-out;
+  max-width: 300px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.player-form.focused {
+  border-color: #007bff;
+  background: #f0faff;
+  transform: scale(1.02);
+}
+
+.player-form label {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.player-form input {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  font-size: 1rem;
+  border: 2px solid #bbb;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.player-form input:focus {
+  border-color: #007bff;
+  background-color: #fff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+.player-form .greeting {
+  margin-top: 0.8rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #4caf50;
+  animation: fadeInUp 0.6s ease-in-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
