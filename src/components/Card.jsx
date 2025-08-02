@@ -1,5 +1,5 @@
 import React from "react";
-import "./card.css";
+import "../style/card.css";
 
 export default function Card({ card, onClick }) {
   const handleKeyPress = (e) => {
