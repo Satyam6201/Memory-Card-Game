@@ -4,7 +4,7 @@ import Controls from "./components/Controls";
 import Header from "./components/Header";
 import PlayerForm from "./components/PlayerForm";
 import VictoryModal from "./components/VictoryModal";
-import "./styles/App.css";
+import "./styles.css";
 
 const emojiSets = {
   animals: ["🐱", "🐶", "🐼", "🦊", "🐵", "🐸", "🐯", "🐷"],
