@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/victoryModal.css";
+import "../style/victoryModal.css";
 
 export default function VictoryModal({ playerName, resetGame }) {
   return (
