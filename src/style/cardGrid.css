@@ -1,0 +1,44 @@
+/* Card Grid Layout */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 16px;
+  justify-items: center;
+  align-items: center;
+  padding: 20px;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.5s ease;
+}
+
+/* Triggered when grid is ready */
+.card-grid.show-grid {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Hover glow for the whole grid */
+.card-grid:hover {
+  box-shadow: 0 0 20px rgba(0, 255, 100, 0.2);
+  transition: box-shadow 0.4s ease-in-out;
+}
+
+/* Accessibility */
+.card-grid [role="gridcell"] {
+  outline: none;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 768px) {
+  .card-grid {
+    gap: 12px;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-grid {
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 10px;
+  }
+}
