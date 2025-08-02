@@ -1,155 +1,160 @@
 import React, { useState, useEffect } from "react";
 import CardGrid from "./components/CardGrid";
-import Header from "./components/Header";
 import Controls from "./components/Controls";
+import Header from "./components/Header";
 import PlayerForm from "./components/PlayerForm";
 import VictoryModal from "./components/VictoryModal";
-import "./styles.css";
-import confetti from "canvas-confetti";
+import "./styles/App.css";
 
-const emojiThemes = {
+const emojiSets = {
   animals: ["🐱", "🐶", "🐼", "🦊", "🐵", "🐸", "🐯", "🐷"],
-  fruits: ["🍎", "🍌", "🍇", "🍉", "🍍", "🍑", "🥝", "🍓"],
-  flags: ["🇮🇳", "🇺🇸", "🇬🇧", "🇯🇵", "🇧🇷", "🇫🇷", "🇨🇦", "🇰🇷"],
+  fruits: ["🍎", "🍌", "🍇", "🍉", "🍓", "🍍", "🥝", "🍒"],
+  flags: ["🇮🇳", "🇺🇸", "🇯🇵", "🇫🇷", "🇩🇪", "🇧🇷", "🇨🇳", "🇬🇧"],
+  sports: ["⚽", "🏀", "🏈", "🎾", "🏐", "🏏", "🥊", "🏓"],
+  nature: ["🌲", "🌸", "🌞", "🌧️", "🌈", "🌻", "🌊", "🌍"],
+  tech: ["💻", "📱", "🖥️", "🖱️", "⌨️", "📡", "🔌", "🤖"]
 };
 
-const difficultyMap = {
+const difficulties = {
   easy: 4,
   medium: 6,
   hard: 8,
-};
-
-const generateCards = (theme, difficulty) => {
-  const selectedEmojis = emojiThemes[theme].slice(0, difficulty);
-  const emojis = [...selectedEmojis, ...selectedEmojis];
-  return emojis
-    .sort(() => Math.random() - 0.5)
-    .map((emoji, index) => ({
-      id: index,
-      emoji,
-      flipped: false,
-      matched: false,
-    }));
 };
 
 export default function App() {
   const [theme, setTheme] = useState("light");
   const [emojiSet, setEmojiSet] = useState("animals");
   const [difficulty, setDifficulty] = useState("easy");
-  const [cards, setCards] = useState(generateCards(emojiSet, difficultyMap[difficulty]));
-  const [selectedCards, setSelectedCards] = useState([]);
-  const [score, setScore] = useState(0);
-  const [moves, setMoves] = useState(0);
-  const [time, setTime] = useState(0);
-  const [gameWon, setGameWon] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
+  const [cards, setCards] = useState([]);
+  const [flipped, setFlipped] = useState([]);
+  const [matched, setMatched] = useState([]);
   const [playerName, setPlayerName] = useState("");
-
-  const [highScore, setHighScore] = useState(() =>
-    localStorage.getItem("highScore") || 0
+  const [moves, setMoves] = useState(0);
+  const [score, setScore] = useState(0);
+  const [isMuted, setIsMuted] = useState(false);
+  const [startTime, setStartTime] = useState(null);
+  const [time, setTime] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const [highScore, setHighScore] = useState(
+    parseInt(localStorage.getItem("highScore")) || 0
   );
-  const [bestMoves, setBestMoves] = useState(() =>
-    localStorage.getItem("bestMoves") || 0
+  const [bestMoves, setBestMoves] = useState(
+    parseInt(localStorage.getItem("bestMoves")) || Infinity
   );
 
+  // Theme Toggle Effect
   useEffect(() => {
-    if (selectedCards.length === 2) {
-      const [first, second] = selectedCards;
-      const firstCard = cards[first];
-      const secondCard = cards[second];
+    document.body.className = theme;
+  }, [theme]);
 
-      if (firstCard.emoji === secondCard.emoji) {
-        if (!isMuted) new Audio("/match.mp3").play();
-        setScore((prev) => prev + 10);
-        setCards((prev) =>
-          prev.map((card, idx) =>
-            idx === first || idx === second
-              ? { ...card, matched: true }
-              : card
-          )
-        );
-      } else {
-        if (!isMuted) new Audio("/flip.mp3").play();
-      }
-
-      setTimeout(() => {
-        setCards((prev) =>
-          prev.map((card, idx) =>
-            idx === first || idx === second
-              ? { ...card, flipped: false }
-              : card
-          )
-        );
-        setSelectedCards([]);
-      }, 800);
+  // Timer
+  useEffect(() => {
+    let interval;
+    if (startTime && matched.length !== cards.length) {
+      interval = setInterval(() => {
+        setTime(Math.floor((Date.now() - startTime) / 1000));
+      }, 1000);
+    } else {
+      clearInterval(interval);
     }
-  }, [selectedCards, cards, isMuted]);
+    return () => clearInterval(interval);
+  }, [startTime, matched, cards]);
 
+  // Game Win Check
   useEffect(() => {
-    if (cards.every((card) => card.matched)) {
-      setGameWon(true);
-      confetti();
-
-      if (time < highScore || highScore === 0) {
-        setHighScore(time);
+    if (cards.length && matched.length === cards.length) {
+      setShowModal(true);
+      if (time < highScore || !highScore) {
         localStorage.setItem("highScore", time);
+        setHighScore(time);
       }
-
-      if (moves < bestMoves || bestMoves === 0) {
-        setBestMoves(moves);
+      if (moves < bestMoves) {
         localStorage.setItem("bestMoves", moves);
+        setBestMoves(moves);
       }
     }
-  }, [cards, time, highScore, moves, bestMoves]);
+  }, [matched, cards, time, highScore, moves, bestMoves]);
 
-  useEffect(() => {
-    let timer;
-    if (!gameWon) {
-      timer = setInterval(() => setTime((prev) => prev + 1), 1000);
-    }
-    return () => clearInterval(timer);
-  }, [time, gameWon]);
-
-  const handleCardClick = (index) => {
-    if (!cards[index].flipped && selectedCards.length < 2) {
-      if (!isMuted) new Audio("/flip.mp3").play();
-      setMoves((prev) => prev + 1);
-      setCards((prev) =>
-        prev.map((card, idx) =>
-          idx === index ? { ...card, flipped: true } : card
-        )
-      );
-      setSelectedCards((prev) => [...prev, index]);
-    }
+  // Card Generator
+  const generateCards = () => {
+    const emojiArray = emojiSets[emojiSet];
+    const total = difficulties[difficulty];
+    let selected = emojiArray.slice(0, total);
+    const fullSet = [...selected, ...selected].sort(() => Math.random() - 0.5);
+    return fullSet.map((emoji) => ({ emoji, isFlipped: false }));
   };
 
   const resetGame = () => {
-    setCards(generateCards(emojiSet, difficultyMap[difficulty]));
-    setSelectedCards([]);
-    setScore(0);
+    setCards(generateCards());
+    setFlipped([]);
+    setMatched([]);
     setMoves(0);
+    setScore(0);
+    setStartTime(Date.now());
     setTime(0);
-    setGameWon(false);
+    setShowModal(false);
   };
+
+  const toggleTheme = () =>
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
 
   const revealCards = () => {
-    setCards((prev) => prev.map((card) => ({ ...card, flipped: true })));
+    const revealed = cards.map((card) => ({ ...card, isFlipped: true }));
+    setCards(revealed);
     setTimeout(() => {
-      setCards((prev) =>
-        prev.map((card) =>
-          !card.matched ? { ...card, flipped: false } : card
-        )
+      const hidden = revealed.map((card, index) =>
+        matched.includes(index)
+          ? card
+          : { ...card, isFlipped: false }
       );
-    }, 1000);
+      setCards(hidden);
+    }, 1500);
   };
 
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  const handleCardClick = (index) => {
+    if (
+      flipped.length === 2 ||
+      flipped.includes(index) ||
+      matched.includes(index)
+    )
+      return;
+
+    const newFlipped = [...flipped, index];
+    const updatedCards = cards.map((card, i) =>
+      i === index ? { ...card, isFlipped: true } : card
+    );
+    setCards(updatedCards);
+    setFlipped(newFlipped);
+
+    if (newFlipped.length === 2) {
+      setMoves((prev) => prev + 1);
+      const [first, second] = newFlipped;
+      if (cards[first].emoji === cards[second].emoji) {
+        setMatched((prev) => [...prev, first, second]);
+        setScore((prev) => prev + 10);
+        setFlipped([]);
+      } else {
+        setTimeout(() => {
+          setCards((prevCards) =>
+            prevCards.map((card, i) =>
+              newFlipped.includes(i)
+                ? { ...card, isFlipped: false }
+                : card
+            )
+          );
+          setFlipped([]);
+        }, 1000);
+      }
+    }
   };
+
+  // On First Load or emoji/difficulty change
+  useEffect(() => {
+    resetGame();
+  }, [emojiSet, difficulty]);
 
   return (
-    <div className={`app ${theme}`}>
-      <PlayerForm playerName={playerName} setPlayerName={setPlayerName} />
+    <div className={`app-container ${theme}`}>
       <Header
         playerName={playerName}
         time={time}
@@ -158,6 +163,7 @@ export default function App() {
         bestMoves={bestMoves}
         highScore={highScore}
       />
+      <PlayerForm playerName={playerName} setPlayerName={setPlayerName} />
       <Controls
         theme={theme}
         toggleTheme={toggleTheme}
@@ -171,7 +177,9 @@ export default function App() {
         setDifficulty={setDifficulty}
       />
       <CardGrid cards={cards} handleCardClick={handleCardClick} />
-      {gameWon && <VictoryModal playerName={playerName} resetGame={resetGame} />}
+      {showModal && (
+        <VictoryModal playerName={playerName} resetGame={resetGame} />
+      )}
     </div>
   );
 }
