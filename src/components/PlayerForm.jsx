@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/playerForm.css";
+import "../style/playerForm.css";
 
 export default function PlayerForm({ playerName, setPlayerName }) {
   const [focus, setFocus] = useState(false);

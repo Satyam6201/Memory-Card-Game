@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/Controls.css";
+import "../style/Controls.css";
 
 export default function Controls({
   theme,
