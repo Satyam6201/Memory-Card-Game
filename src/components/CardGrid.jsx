@@ -3,25 +3,17 @@ import Card from "./Card";
 import "../style/cardGrid.css";
 
 export default function CardGrid({ cards, handleCardClick }) {
-  const [isShuffled, setIsShuffled] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    // Trigger animation when cards are first loaded
-    const timeout = setTimeout(() => {
-      setIsShuffled(true);
-    }, 100); // small delay to trigger CSS animation
-
+    const timeout = setTimeout(() => setLoaded(true), 100);
     return () => clearTimeout(timeout);
   }, []);
 
   return (
-    <div
-      className={`card-grid ${isShuffled ? "show-grid" : ""}`}
-      role="grid"
-      aria-label="Memory Game Grid"
-    >
+    <div className={`card-grid ${loaded ? "show" : ""}`} role="grid" aria-label="Memory Game Grid">
       {cards.map((card, index) => (
-        <div role="gridcell" key={index}>
+        <div role="gridcell" key={index} className="grid-cell" style={{ animationDelay: `${index * 50}ms` }}>
           <Card card={card} onClick={() => handleCardClick(index)} />
         </div>
       ))}
