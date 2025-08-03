@@ -34,28 +34,51 @@ body {
   animation: fadeIn 1s ease-in-out;
 }
 
+footer.footer {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 1rem;
+  color: var(--text);
+  opacity: 0.7;
+  animation: fadeInUp 2s ease-in-out;
+}
+
+.name-glow {
+  color: var(--primary);
+  font-weight: bold;
+  animation: glow 1.5s ease-in-out infinite alternate;
+}
+
 /* Animations */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes pop {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Fireworks Animation for Victory */
-@keyframes fireworks {
-  0% {
-    box-shadow: 0 0 0px #f39c12;
+@keyframes glow {
+  from {
+    text-shadow: 0 0 5px var(--primary);
   }
-  100% {
-    box-shadow: 0 0 20px 5px #f39c12;
+  to {
+    text-shadow: 0 0 20px var(--primary), 0 0 10px #fff;
+  }
+}
+
+/* Fireworks on victory */
+@keyframes fireworks {
+  0%, 100% {
+    box-shadow: 0 0 0 #f39c12;
+  }
+  50% {
+    box-shadow: 0 0 30px 10px #f39c12;
   }
 }
 
 .fireworks {
-  animation: fireworks 0.6s ease-in-out infinite alternate;
+  animation: fireworks 1s ease-in-out infinite alternate;
 }
