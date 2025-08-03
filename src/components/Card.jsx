@@ -10,7 +10,7 @@ export default function Card({ card, onClick }) {
 
   return (
     <div
-      className={`card ${card.flipped ? "flipped" : ""} ${card.matched ? "matched" : ""} ${card.selected ? "selected" : ""}`}
+      className={`card ${card.flipped ? "flipped" : ""} ${card.matched ? "matched" : ""}`}
       onClick={onClick}
       onKeyDown={handleKeyPress}
       role="button"
@@ -18,7 +18,6 @@ export default function Card({ card, onClick }) {
       aria-label={card.flipped ? card.emoji : "Hidden card"}
       aria-pressed={card.flipped}
     >
-      <span className="ripple" />
       <div className="card-inner">
         <div className="card-front">{card.emoji}</div>
         <div className="card-back">❓</div>
