@@ -13,116 +13,15 @@
   box-shadow: 0 0 0 3px #4caf50;
 }
 
-/* Ripple Effect */
-.card .ripple {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  animation: rippleEffect 0.6s ease-out forwards;
-}
-
-@keyframes rippleEffect {
-  0% {
-    width: 0;
-    height: 0;
-    opacity: 1;
-  }
-  100% {
-    width: 200%;
-    height: 200%;
-    opacity: 0;
-  }
-}
-
-/* Inner flip logic */
-.card-inner {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 0.6s;
-}
-
-/* Flip */
-.card.flipped .card-inner {
-  transform: rotateY(180deg);
-}
-
-/* Faces */
-.card-front,
-.card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  font-size: 2rem;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backface-visibility: hidden;
-  border: 2px solid #444;
-  transition: background 0.3s, transform 0.3s;
-}
-
-/* Front */
-.card-front {
-  background-color: #fff;
-  color: #333;
-  transform: rotateY(180deg);
-}
-
-/* Back */
-.card-back {
-  background-color: #333;
-  color: #fff;
-}
-
-/* Matched */
-.card.matched .card-inner {
-  animation: pop 0.4s ease;
-}
-
-.card.matched .card-front {
-  background-color: #c8f7c5;
-  border-color: #4caf50;
-  color: #2e7d32;
-  box-shadow: 0 0 10px #4caf50;
-}
-
-/* Selected (for future use) */
-.card.selected .card-inner {
-  animation: pulse 1s infinite;
-}
-
-/* Hover bounce if not flipped */
-.card:not(.flipped):hover {
+/* Card Hover + Shine Effect */
+.card:hover {
   transform: scale(1.05);
 }
 
-/* Animations */
-@keyframes pop {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.15); }
-  100% { transform: scale(1); }
+.card:hover::after {
+  left: 150%;
 }
 
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-/* Hover Shine */
 .card::after {
   content: "";
   position: absolute;
@@ -136,8 +35,80 @@
   pointer-events: none;
 }
 
-.card:hover::after {
-  left: 150%;
+/* Flip Wrapper */
+.card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+
+/* Flip State */
+.card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Card Faces */
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-size: 2rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  border: 2px solid #444;
+  transition: background 0.3s;
+}
+
+/* Front Face */
+.card-front {
+  background-color: #fff;
+  color: #333;
+  transform: rotateY(180deg);
+}
+
+/* Back Face */
+.card-back {
+  background-color: #333;
+  color: #fff;
+}
+
+/* Matched Animation */
+.card.matched .card-inner {
+  animation: pop 0.4s ease, sparkle 1.5s ease-in-out infinite;
+}
+
+.card.matched .card-front {
+  background-color: #c8f7c5;
+  border-color: #4caf50;
+  color: #2e7d32;
+  box-shadow: 0 0 12px #4caf50;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    box-shadow: 0 0 8px #4caf50;
+  }
+  50% {
+    box-shadow: 0 0 16px #81c784;
+  }
 }
 
 /* Responsive */
