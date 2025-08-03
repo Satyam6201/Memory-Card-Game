@@ -13,23 +13,28 @@ export default function Controls({
   difficulty,
   setDifficulty,
   moves,
-  timeElapsed
+  timeElapsed,
+  isPaused,
+  togglePause
 }) {
   return (
     <div className="controls">
       <div className="stats">
-        <span className="stat">⏱️ Time: {timeElapsed}s</span>
-        <span className="stat">🎯 Moves: {moves}</span>
+        <span className="stat glow">⏱️ Time: {timeElapsed}s</span>
+        <span className="stat glow">🎯 Moves: {moves}</span>
       </div>
 
       <div className="buttons">
-        <button className="control-btn" onClick={revealCards}>Hint 🔍</button>
-        <button className="control-btn" onClick={resetGame}>Reset ♻️</button>
+        <button className="control-btn" onClick={revealCards}>🔍 Hint</button>
+        <button className="control-btn" onClick={resetGame}>♻️ Reset</button>
         <button className="control-btn" onClick={toggleTheme}>
-          {theme === "light" ? "🌙 Dark" : "☀️ Light"}
+          {theme === "light" ? "🌙 Dark Mode" : "☀️ Light Mode"}
         </button>
         <button className="control-btn" onClick={() => setIsMuted(!isMuted)}>
-          {isMuted ? "🔇 Mute" : "🔊 Sound"}
+          {isMuted ? "🔇 Muted" : "🔊 Sound"}
+        </button>
+        <button className="control-btn" onClick={togglePause}>
+          {isPaused ? "▶️ Resume" : "⏸️ Pause"}
         </button>
       </div>
 
