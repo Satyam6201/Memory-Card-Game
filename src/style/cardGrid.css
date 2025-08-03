@@ -1,38 +1,65 @@
-/* Card Grid Layout */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-  gap: 16px;
+  gap: 18px;
+  padding: 24px;
   justify-items: center;
   align-items: center;
-  padding: 20px;
   opacity: 0;
-  transform: scale(0.9);
-  transition: all 0.5s ease;
+  transform: scale(0.95);
+  transition: all 0.6s ease;
 }
 
-/* Triggered when grid is ready */
-.card-grid.show-grid {
+.card-grid.show {
   opacity: 1;
   transform: scale(1);
 }
 
-/* Hover glow for the whole grid */
+.grid-cell {
+  opacity: 0;
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+.card-grid.show .grid-cell {
+  animation-delay: 0ms;
+}
+
+.grid-cell:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+/* Optional subtle pulse glow when hovering over grid */
 .card-grid:hover {
-  box-shadow: 0 0 20px rgba(0, 255, 100, 0.2);
-  transition: box-shadow 0.4s ease-in-out;
+  animation: pulseGlow 1.5s infinite alternate;
 }
 
-/* Accessibility */
-.card-grid [role="gridcell"] {
-  outline: none;
+/* Keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Responsive Tweaks */
+@keyframes pulseGlow {
+  from {
+    box-shadow: 0 0 8px rgba(0, 255, 100, 0.1);
+  }
+  to {
+    box-shadow: 0 0 18px rgba(0, 255, 100, 0.3);
+  }
+}
+
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
   .card-grid {
-    gap: 12px;
-    padding: 15px;
+    gap: 14px;
+    padding: 16px;
   }
 }
 
