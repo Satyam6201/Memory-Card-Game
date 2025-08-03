@@ -42,7 +42,7 @@ export default function App() {
     parseInt(localStorage.getItem("bestMoves")) || Infinity
   );
 
-  // Theme Toggle Effect
+  // Theme Effect
   useEffect(() => {
     document.body.className = theme;
   }, [theme]);
@@ -60,7 +60,7 @@ export default function App() {
     return () => clearInterval(interval);
   }, [startTime, matched, cards]);
 
-  // Game Win Check
+  // Win Check
   useEffect(() => {
     if (cards.length && matched.length === cards.length) {
       setShowModal(true);
@@ -75,7 +75,6 @@ export default function App() {
     }
   }, [matched, cards, time, highScore, moves, bestMoves]);
 
-  // Card Generator
   const generateCards = () => {
     const emojiArray = emojiSets[emojiSet];
     const total = difficulties[difficulty];
@@ -148,13 +147,12 @@ export default function App() {
     }
   };
 
-  // On First Load or emoji/difficulty change
   useEffect(() => {
     resetGame();
   }, [emojiSet, difficulty]);
 
   return (
-    <div className={`app-container ${theme}`}>
+    <div className={`app-container ${theme} ${showModal ? "fireworks" : ""}`}>
       <Header
         playerName={playerName}
         time={time}
@@ -180,6 +178,10 @@ export default function App() {
       {showModal && (
         <VictoryModal playerName={playerName} resetGame={resetGame} />
       )}
+
+      <footer className="footer">
+        <p className="credit">Made with ❤️ by <span className="name-glow">Satyam</span></p>
+      </footer>
     </div>
   );
 }
