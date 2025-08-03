@@ -2,13 +2,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.2rem;
-  padding: 1.5rem;
+  gap: 1.5rem;
+  padding: 2rem;
   background: var(--bg-color, #fff);
   color: var(--text-color, #333);
   border-radius: 1rem;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 0.8s ease-in-out;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  animation: slideIn 0.6s ease-in-out;
   max-width: 800px;
   margin: auto;
 }
@@ -17,7 +17,11 @@
   display: flex;
   gap: 2rem;
   font-size: 1.2rem;
-  font-weight: 600;
+  font-weight: bold;
+}
+
+.glow {
+  animation: glow 1.5s infinite ease-in-out alternate;
 }
 
 .buttons,
@@ -35,14 +39,14 @@
   border: none;
   border-radius: 0.6rem;
   cursor: pointer;
-  transition: transform 0.2s, background 0.3s;
   font-size: 1rem;
   font-weight: 600;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .control-btn:hover {
-  transform: scale(1.05);
-  background: linear-gradient(135deg, #6246ea, #4629c2);
+  transform: scale(1.08);
+  box-shadow: 0 0 10px rgba(127, 90, 240, 0.6);
 }
 
 .control-btn:active {
@@ -57,10 +61,31 @@
   background: #f0f0f0;
   color: #333;
   cursor: pointer;
+  transition: background 0.3s;
 }
 
 .dropdown:hover {
   background: #e6e6e6;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 5px #7f5af0;
+  }
+  to {
+    text-shadow: 0 0 15px #6246ea;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 768px) {
@@ -71,22 +96,13 @@
   .stats {
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
-  }
-
-  .buttons, .selectors {
-    flex-direction: column;
     gap: 0.8rem;
   }
-}
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(25px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .buttons,
+  .selectors {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
   }
 }
