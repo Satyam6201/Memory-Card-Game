@@ -13,6 +13,7 @@
   margin: auto;
 }
 
+/* Stats */
 .stats {
   display: flex;
   gap: 2rem;
@@ -24,6 +25,7 @@
   animation: glow 1.5s infinite ease-in-out alternate;
 }
 
+/* Buttons & Selectors */
 .buttons,
 .selectors {
   display: flex;
@@ -41,18 +43,20 @@
   cursor: pointer;
   font-size: 1rem;
   font-weight: 600;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.3s;
 }
 
 .control-btn:hover {
-  transform: scale(1.08);
-  box-shadow: 0 0 10px rgba(127, 90, 240, 0.6);
+  transform: scale(1.1) translateY(-2px);
+  box-shadow: 0 0 15px rgba(127, 90, 240, 0.7);
 }
 
 .control-btn:active {
-  transform: scale(0.95);
+  transform: scale(0.95) translateY(0);
+  box-shadow: 0 0 8px rgba(127, 90, 240, 0.4);
 }
 
+/* Dropdowns */
 .dropdown {
   padding: 0.5rem 1rem;
   border: 2px solid #7f5af0;
@@ -61,13 +65,21 @@
   background: #f0f0f0;
   color: #333;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.2s ease;
 }
 
 .dropdown:hover {
   background: #e6e6e6;
+  transform: scale(1.05);
 }
 
+/* Fade-in Animation for Dropdowns */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.8s ease forwards;
+}
+
+/* Keyframes */
 @keyframes glow {
   from {
     text-shadow: 0 0 5px #7f5af0;
@@ -88,6 +100,18 @@
   }
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile Responsive */
 @media (max-width: 768px) {
   .controls {
     padding: 1rem;
