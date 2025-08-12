@@ -19,11 +19,13 @@ export default function Controls({
 }) {
   return (
     <div className="controls">
+      {/* Stats Section */}
       <div className="stats">
         <span className="stat glow">⏱️ Time: {timeElapsed}s</span>
         <span className="stat glow">🎯 Moves: {moves}</span>
       </div>
 
+      {/* Buttons */}
       <div className="buttons">
         <button className="control-btn" onClick={revealCards}>🔍 Hint</button>
         <button className="control-btn" onClick={resetGame}>♻️ Reset</button>
@@ -38,9 +40,10 @@ export default function Controls({
         </button>
       </div>
 
+      {/* Dropdown Selectors */}
       <div className="selectors">
         <select
-          className="dropdown"
+          className="dropdown fade-in"
           onChange={(e) => {
             setEmojiSet(e.target.value);
             resetGame();
@@ -50,10 +53,13 @@ export default function Controls({
           <option value="animals">🐾 Animals</option>
           <option value="fruits">🍉 Fruits</option>
           <option value="flags">🚩 Flags</option>
+          <option value="sports">🏆 Sports</option>
+          <option value="nature">🌿 Nature</option>
+          <option value="tech">💻 Tech</option>
         </select>
 
         <select
-          className="dropdown"
+          className="dropdown fade-in"
           onChange={(e) => {
             setDifficulty(e.target.value);
             resetGame();
