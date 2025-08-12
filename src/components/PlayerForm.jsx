@@ -27,8 +27,16 @@ export default function PlayerForm({ playerName, setPlayerName }) {
       />
 
       <div className="form-footer">
-        <span className="char-count">{playerName.length}/{maxLength}</span>
-        {playerName && <p className="greeting">👋 Ready, <strong>{playerName}</strong>?</p>}
+        <span
+          className={`char-count ${
+            playerName.length >= maxLength - 2 ? "warn" : ""
+          }`}
+        >
+          {playerName.length}/{maxLength}
+        </span>
+        {playerName && (
+          <p className="greeting">👋 Ready, <strong>{playerName}</strong>?</p>
+        )}
       </div>
     </div>
   );
