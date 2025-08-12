@@ -2,31 +2,18 @@
   --bg: #ffffff;
   --text: #000000;
   --primary: #007bff;
-  --button-bg: var(--primary);
-  --button-text: #ffffff;
 }
 
 .dark {
   --bg: #121212;
   --text: #ffffff;
   --primary: #4dabf7;
-  --button-bg: var(--primary);
-  --button-text: #ffffff;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
 }
 
 body {
   background: var(--bg);
   color: var(--text);
-  min-height: 100vh;
   transition: background 0.4s ease, color 0.4s ease;
-  overflow-x: hidden;
 }
 
 .app-container {
@@ -34,13 +21,11 @@ body {
   animation: fadeIn 1s ease-in-out;
 }
 
-footer.footer {
+.footer {
   text-align: center;
   margin-top: 2rem;
+  opacity: 0.8;
   font-size: 1rem;
-  color: var(--text);
-  opacity: 0.7;
-  animation: fadeInUp 2s ease-in-out;
 }
 
 .name-glow {
@@ -55,30 +40,16 @@ footer.footer {
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 @keyframes glow {
-  from {
-    text-shadow: 0 0 5px var(--primary);
-  }
-  to {
-    text-shadow: 0 0 20px var(--primary), 0 0 10px #fff;
-  }
-}
-
-/* Fireworks on victory */
-@keyframes fireworks {
-  0%, 100% {
-    box-shadow: 0 0 0 #f39c12;
-  }
-  50% {
-    box-shadow: 0 0 30px 10px #f39c12;
-  }
+  from { text-shadow: 0 0 5px var(--primary); }
+  to { text-shadow: 0 0 20px var(--primary), 0 0 10px #fff; }
 }
 
 .fireworks {
   animation: fireworks 1s ease-in-out infinite alternate;
+}
+
+@keyframes fireworks {
+  0%, 100% { box-shadow: 0 0 0 #f39c12; }
+  50% { box-shadow: 0 0 30px 10px #f39c12; }
 }
