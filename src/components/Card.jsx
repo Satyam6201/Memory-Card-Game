@@ -2,25 +2,23 @@ import React from "react";
 import "../style/card.css";
 
 export default function Card({ card, onClick }) {
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      onClick();
-    }
-  };
-
   return (
     <div
-      className={`card ${card.flipped ? "flipped" : ""} ${card.matched ? "matched" : ""}`}
+      className={`card ${card.flipped ? "flipped" : ""}`}
       onClick={onClick}
-      onKeyDown={handleKeyPress}
       role="button"
-      tabIndex={0}
-      aria-label={card.flipped ? card.emoji : "Hidden card"}
-      aria-pressed={card.flipped}
+      aria-label={card.flipped ? card.name : "Hidden card"}
     >
       <div className="card-inner">
-        <div className="card-front">{card.emoji}</div>
-        <div className="card-back">❓</div>
+        {/* Front of the card */}
+        <div className="card-front">
+          <img src={card.image} alt={card.name} />
+        </div>
+
+        {/* Back of the card */}
+        <div className="card-back">
+          <span>❓</span>
+        </div>
       </div>
     </div>
   );
