@@ -3,17 +3,18 @@
   height: 80px;
   perspective: 1000px;
   cursor: pointer;
-  transition: transform 0.3s ease;
-  outline: none;
   position: relative;
   animation: fadeIn 0.4s ease-in;
+  outline: none;
 }
 
+/* Focus Glow */
 .card:focus {
   box-shadow: 0 0 0 3px #4caf50;
+  border-radius: 10px;
 }
 
-/* Card Hover + Shine Effect */
+/* Hover + Shine Effect */
 .card:hover {
   transform: scale(1.05);
 }
@@ -35,7 +36,7 @@
   pointer-events: none;
 }
 
-/* Flip Wrapper */
+/* Card Flip Container */
 .card-inner {
   width: 100%;
   height: 100%;
@@ -44,7 +45,7 @@
   transition: transform 0.6s;
 }
 
-/* Flip State */
+/* Flip Animation */
 .card.flipped .card-inner {
   transform: rotateY(180deg);
 }
@@ -62,17 +63,16 @@
   justify-content: center;
   backface-visibility: hidden;
   border: 2px solid #444;
-  transition: background 0.3s;
 }
 
-/* Front Face */
+/* Front */
 .card-front {
   background-color: #fff;
   color: #333;
   transform: rotateY(180deg);
 }
 
-/* Back Face */
+/* Back */
 .card-back {
   background-color: #333;
   color: #fff;
@@ -90,7 +90,12 @@
   box-shadow: 0 0 12px #4caf50;
 }
 
-/* Animations */
+/* Flip Sound Effect Animation */
+.card.flipped:not(.matched) .card-front {
+  animation: glow 0.5s ease-in-out;
+}
+
+/* Keyframes */
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
@@ -109,6 +114,12 @@
   50% {
     box-shadow: 0 0 16px #81c784;
   }
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 5px gold; }
+  50% { box-shadow: 0 0 20px gold; }
+  100% { box-shadow: 0 0 5px gold; }
 }
 
 /* Responsive */
