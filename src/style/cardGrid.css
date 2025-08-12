@@ -17,32 +17,39 @@
 
 .grid-cell {
   opacity: 0;
-  animation: fadeInUp 0.4s ease forwards;
+  transform: translateY(20px) scale(0.9);
+  animation: fadeInUp 0.5s ease forwards;
 }
 
 .card-grid.show .grid-cell {
-  animation-delay: 0ms;
+  /* Staggered animation delay applied from JS inline styles */
 }
 
 .grid-cell:hover {
-  transform: scale(1.05);
+  transform: scale(1.08) rotate(2deg);
   transition: transform 0.3s ease;
 }
 
-/* Optional subtle pulse glow when hovering over grid */
+/* Subtle glowing effect when hovering over the whole grid */
 .card-grid:hover {
-  animation: pulseGlow 1.5s infinite alternate;
+  animation: pulseGlow 2s infinite alternate;
+}
+
+/* Card flip animation for click */
+.grid-cell:active {
+  transform: scale(0.95) rotate(-2deg);
+  transition: transform 0.15s ease;
 }
 
 /* Keyframes */
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(20px) scale(0.9);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
