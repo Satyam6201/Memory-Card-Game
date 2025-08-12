@@ -11,9 +11,18 @@ export default function CardGrid({ cards, handleCardClick }) {
   }, []);
 
   return (
-    <div className={`card-grid ${loaded ? "show" : ""}`} role="grid" aria-label="Memory Game Grid">
+    <div
+      className={`card-grid ${loaded ? "show" : ""}`}
+      role="grid"
+      aria-label="Memory Game Grid"
+    >
       {cards.map((card, index) => (
-        <div role="gridcell" key={index} className="grid-cell" style={{ animationDelay: `${index * 50}ms` }}>
+        <div
+          role="gridcell"
+          key={index}
+          className="grid-cell"
+          style={{ animationDelay: `${index * 80}ms` }}
+        >
           <Card card={card} onClick={() => handleCardClick(index)} />
         </div>
       ))}
