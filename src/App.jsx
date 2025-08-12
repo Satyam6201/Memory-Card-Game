@@ -4,7 +4,7 @@ import Controls from "./components/Controls";
 import Header from "./components/Header";
 import PlayerForm from "./components/PlayerForm";
 import VictoryModal from "./components/VictoryModal";
-import "./styles.css";
+import "./style/app.css";
 
 const emojiSets = {
   animals: ["🐱", "🐶", "🐼", "🦊", "🐵", "🐸", "🐯", "🐷"],
@@ -18,7 +18,7 @@ const emojiSets = {
 const difficulties = {
   easy: 4,
   medium: 6,
-  hard: 8,
+  hard: 8
 };
 
 export default function App() {
@@ -42,25 +42,23 @@ export default function App() {
     parseInt(localStorage.getItem("bestMoves")) || Infinity
   );
 
-  // Theme Effect
+  // Apply theme to body
   useEffect(() => {
     document.body.className = theme;
   }, [theme]);
 
-  // Timer
+  // Game timer
   useEffect(() => {
     let interval;
     if (startTime && matched.length !== cards.length) {
       interval = setInterval(() => {
         setTime(Math.floor((Date.now() - startTime) / 1000));
       }, 1000);
-    } else {
-      clearInterval(interval);
     }
     return () => clearInterval(interval);
   }, [startTime, matched, cards]);
 
-  // Win Check
+  // Win condition check
   useEffect(() => {
     if (cards.length && matched.length === cards.length) {
       setShowModal(true);
@@ -78,9 +76,9 @@ export default function App() {
   const generateCards = () => {
     const emojiArray = emojiSets[emojiSet];
     const total = difficulties[difficulty];
-    let selected = emojiArray.slice(0, total);
-    const fullSet = [...selected, ...selected].sort(() => Math.random() - 0.5);
-    return fullSet.map((emoji) => ({ emoji, isFlipped: false }));
+    const selected = emojiArray.slice(0, total);
+    const shuffled = [...selected, ...selected].sort(() => Math.random() - 0.5);
+    return shuffled.map((emoji) => ({ emoji, isFlipped: false }));
   };
 
   const resetGame = () => {
@@ -102,9 +100,7 @@ export default function App() {
     setCards(revealed);
     setTimeout(() => {
       const hidden = revealed.map((card, index) =>
-        matched.includes(index)
-          ? card
-          : { ...card, isFlipped: false }
+        matched.includes(index) ? card : { ...card, isFlipped: false }
       );
       setCards(hidden);
     }, 1500);
@@ -115,8 +111,9 @@ export default function App() {
       flipped.length === 2 ||
       flipped.includes(index) ||
       matched.includes(index)
-    )
+    ) {
       return;
+    }
 
     const newFlipped = [...flipped, index];
     const updatedCards = cards.map((card, i) =>
@@ -136,9 +133,7 @@ export default function App() {
         setTimeout(() => {
           setCards((prevCards) =>
             prevCards.map((card, i) =>
-              newFlipped.includes(i)
-                ? { ...card, isFlipped: false }
-                : card
+              newFlipped.includes(i) ? { ...card, isFlipped: false } : card
             )
           );
           setFlipped([]);
@@ -147,6 +142,7 @@ export default function App() {
     }
   };
 
+  // Reset game whenever emoji set or difficulty changes
   useEffect(() => {
     resetGame();
   }, [emojiSet, difficulty]);
@@ -178,9 +174,10 @@ export default function App() {
       {showModal && (
         <VictoryModal playerName={playerName} resetGame={resetGame} />
       )}
-
       <footer className="footer">
-        <p className="credit">Made with ❤️ by <span className="name-glow">Satyam</span></p>
+        <p className="credit">
+          Made with ❤️ by <span className="name-glow">Satyam</span>
+        </p>
       </footer>
     </div>
   );
