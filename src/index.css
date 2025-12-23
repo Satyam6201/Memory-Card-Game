@@ -1,7 +1,7 @@
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0f172a;
+  font-family: "Segoe UI", sans-serif;
+  background: radial-gradient(circle, #020617, #020617);
   color: white;
 }
 
@@ -10,12 +10,26 @@ body {
   padding: 20px;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 80px);
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-weight: bold;
+}
+
+.controls {
+  margin: 15px 0;
+  display: flex;
   gap: 15px;
   justify-content: center;
-  margin: 20px 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  max-width: 360px;
+  gap: 15px;
+  margin: auto;
 }
 
 /* Card */
@@ -24,6 +38,11 @@ body {
   height: 100px;
   perspective: 800px;
   cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.05);
 }
 
 .card-inner {
@@ -42,25 +61,53 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  border-radius: 10px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   backface-visibility: hidden;
-  font-size: 32px;
+  font-size: 34px;
 }
 
 .card-front {
-  background: #22c55e;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
   transform: rotateY(180deg);
 }
 
 .card-back {
-  background: #334155;
+  background: linear-gradient(135deg, #334155, #0f172a);
+}
+
+.card.matched {
+  animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 8px #22c55e; }
+  to { box-shadow: 0 0 18px #4ade80; }
 }
 
 button {
   padding: 8px 16px;
-  font-size: 16px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: none;
   cursor: pointer;
+  background: #2563eb;
+  color: white;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+.win {
+  margin-top: 15px;
+  color: #4ade80;
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }

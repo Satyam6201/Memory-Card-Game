@@ -1,7 +1,7 @@
 const emojis = ["🐶", "🐱", "🦊", "🐼", "🐸", "🐵"];
 
-export const createCards = () => {
-  const cards = [...emojis, ...emojis]
+export const createCards = () =>
+  [...emojis, ...emojis]
     .sort(() => Math.random() - 0.5)
     .map((emoji, index) => ({
       id: index,
@@ -9,6 +9,3 @@ export const createCards = () => {
       isFlipped: false,
       isMatched: false
     }));
-
-  return cards;
-};
